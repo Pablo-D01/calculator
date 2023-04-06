@@ -1,3 +1,5 @@
+//operacje matematyczne
+
 function add(a,b){
     console.log(a + b);
 }
@@ -19,7 +21,13 @@ function operate(operation,a,b){
 
 }
 
-operate(add,1,1);
-operate(subtract,1,1);
-operate(multiply,1,1);
-operate(divide,1,1);
+// działanie przycisków
+
+const displayButtons = document.querySelectorAll(".displayButton");
+
+displayButtons.forEach((button) => {
+    button.addEventListener("click", () => {
+      console.log(button.innerHTML);
+      return button.innerHTML;
+    });
+  });
