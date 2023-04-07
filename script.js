@@ -22,12 +22,43 @@ function operate(operation,a,b){
 }
 
 // działanie przycisków
+//liczbowe
+const numberButtons = document.querySelectorAll(".numberButton");
+const display = document.querySelector('.display');
+const displayLast = document.querySelector('.displayLast');
 
-const displayButtons = document.querySelectorAll(".displayButton");
 
-displayButtons.forEach((button) => {
+function isDivEmpty(element) {
+    return element.innerHTML.trim() === '';
+  }
+
+
+numberButtons.forEach((button) => {
     button.addEventListener("click", () => {
-      console.log(button.innerHTML);
-      return button.innerHTML;
+
+        if(display.innerHTML === '0'){
+            display.innerHTML = button.innerHTML;
+        }
+        else{
+            display.innerHTML += button.innerHTML;
+        }
+
+    });
+  });
+
+// matematyczne
+const mathButton = document.querySelectorAll(".mathButton");
+
+
+
+
+mathButton.forEach((button) => {
+    button.addEventListener("click", () => {
+        if(isDivEmpty(displayLast)){
+            displayLast.innerHTML += display.innerHTML + button.innerHTML;
+        }
+        else{
+            displayLast.innerHTML = displayLast.innerHTML.substring(0, displayLast.innerHTML.length - 1) + button.innerHTML ;
+        }
     });
   });
