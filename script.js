@@ -41,23 +41,25 @@ function isDivEmpty(element) {
 
 numberButtons.forEach((button) => {
     button.addEventListener("click", () => {
-
+      if( math === 0 ){
         if(display.innerHTML === '0'){
             display.innerHTML = button.innerHTML;
         }
         else{
             display.innerHTML += button.innerHTML;
         }
-
+      }
     });
   });
 
   comaButton.addEventListener("click", () => {
-    if(display.textContent.includes('.') ){
-      return
-    }
-    else{
-      display.innerHTML += comaButton.innerHTML;
+    if(math === 0){
+      if(display.textContent.includes('.') ){
+        return
+      }
+      else{
+        display.innerHTML += comaButton.innerHTML;
+      }
     }
   });
 
@@ -69,13 +71,13 @@ const operateButton = document.querySelector('.operateButton');
 mathButton.forEach((button) => {
     button.addEventListener("click", () => {
 
-        if(isDivEmpty(displayLast) ){
+        if(isDivEmpty(displayLast)){
             firstNumber = Number(display.innerHTML);
             displayLast.innerHTML += display.innerHTML + button.innerHTML;
             operand = button.innerHTML;
             display.innerHTML ='0';
         }
-        else{
+        else if( math === 0 ){
             displayLast.innerHTML = displayLast.innerHTML.substring(0, displayLast.innerHTML.length - 1) + button.innerHTML ;
             operand = button.innerHTML;
         }
@@ -105,6 +107,7 @@ operateButton.addEventListener('click', () => {
 
         let result = operate(operation,firstNumber,secondNumber);
         display.innerHTML = result; 
+        displayLast.innerHTML += `${secondNumber}=`
         console.log(result)
     }
   });
