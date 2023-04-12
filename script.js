@@ -1,19 +1,19 @@
 //operacje matematyczne
 
 function add(a,b){
-    return (a + b);
+    return(a + b);
 }
 
 function subtract(a,b){
-    return ( a - b);
+    return( a - b);
 }
 
 function multiply(a,b){
-    return ( a * b);
+    return( a * b);
 }
 
 function divide(a,b){
-    return ( a / b);
+    return( a / b);
 }
 
 function operate(operation,a,b){
@@ -26,11 +26,13 @@ function operate(operation,a,b){
 const numberButtons = document.querySelectorAll(".numberButton");
 const display = document.querySelector('.display');
 const displayLast = document.querySelector('.displayLast');
+const comaButton = document.querySelector('.comaButton');
 
 let firstNumber = 0;
 let secondNumber = 0;
 let operand ='';
 let operation ='';
+let math = 0 ;
 
 function isDivEmpty(element) {
     return element.innerHTML.trim() === '';
@@ -50,17 +52,24 @@ numberButtons.forEach((button) => {
     });
   });
 
+  comaButton.addEventListener("click", () => {
+    if(display.textContent.includes('.') ){
+      return
+    }
+    else{
+      display.innerHTML += comaButton.innerHTML;
+    }
+  });
+
 // matematyczne
 const mathButton = document.querySelectorAll(".mathButton");
 const operateButton = document.querySelector('.operateButton');
 
 
-
-
 mathButton.forEach((button) => {
     button.addEventListener("click", () => {
 
-        if(isDivEmpty(displayLast)){
+        if(isDivEmpty(displayLast) ){
             firstNumber = Number(display.innerHTML);
             displayLast.innerHTML += display.innerHTML + button.innerHTML;
             operand = button.innerHTML;
@@ -73,7 +82,7 @@ mathButton.forEach((button) => {
     });
   });
 
-
+  
 function convertOperand(operand){
     if (operand === '+') {
         operation = add;
@@ -88,7 +97,8 @@ function convertOperand(operand){
 }
 
 operateButton.addEventListener('click', () => {
-    if(operand !=''){
+    if(operand !='' && math === 0){
+        math ++;
         console.log('works')
         convertOperand(operand)
         secondNumber = Number(display.innerHTML);
