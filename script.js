@@ -27,6 +27,8 @@ const numberButtons = document.querySelectorAll(".numberButton");
 const display = document.querySelector('.display');
 const displayLast = document.querySelector('.displayLast');
 const comaButton = document.querySelector('.comaButton');
+const clearButton = document.querySelector('.clearButton');
+
 
 let firstNumber = 0;
 let secondNumber = 0;
@@ -111,3 +113,15 @@ operateButton.addEventListener('click', () => {
         console.log(result)
     }
   });
+
+  // clear & delete
+
+  clearButton.addEventListener('click', () => {
+    firstNumber = 0;
+    secondNumber = 0;
+    operand ='';
+    operation ='';
+    math = 0 ;
+    display.innerHTML = ''
+    displayLast.innerHTML = ''
+  })
