@@ -4,7 +4,8 @@ html{
     background-color: #161A1E;
     font-family: 'Roboto Serif', serif;
 }
-body{
+
+.container{
     display: flex;
     align-items: center;
     justify-content: center;
@@ -13,7 +14,6 @@ body{
     padding: 10px;
     margin-top: 50px;
 }
-
 .calculator{
     background-color: #1E2329;
     width: 300px;
@@ -24,31 +24,32 @@ body{
 }
 
 .screen{
-    height: 100px;
+    width: 100%;
     background-color: #2B3139;
     border: 0.5px solid black;
     border-radius: 5px;
     margin-bottom: 10px;
     color: white;
     box-shadow: inset 2px 3px 5px 0px rgba(0,0,0,0.7);
-
-    
 }
 
 .displayLast{
     position: relative;
-    height: 40px;
-    left: 10px;
+    height: 50px;
+    right: 10px;
     top: 10px;
     font-size: 15px ;
-    color: #5EA07B;
+    color: #22b455;
+    text-align: right;
+
 
 }
 
 .display{
+    text-align: right;
     position: relative;
-    left: 10px;
-    height: 40px;
+    right: 10px;
+    height: 70px;
     font-size: 30px ;
 }
 
@@ -102,3 +103,28 @@ button{
 
 }
 
+footer{
+    margin-bottom: 1rem;
+    font-weight: 700;
+    text-align: center;
+    text-shadow: -1px 1.5px 0px rgba(0,0,0,0.4);
+}
+footer p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+    color: #f0b90b;
+}
+/* sztuczka */
+#calculator{
+    transform:
+      perspective(750px)
+      translate3d(0px, 0px, -250px)
+      rotateX(27deg)
+      scale(0.9, 0.9);
+    border-radius: 20px;
+    transition: 0.5s ease-in-out transform;
+    cursor: pointer;
+  }

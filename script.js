@@ -42,6 +42,15 @@ function isDivEmpty(element) {
     return element.innerHTML.trim() === '';
   }
 
+function reset(){
+  firstNumber = 0;
+  secondNumber = 0;
+  operand ='';
+  operation ='';
+  math = 0 ;
+  display.innerHTML = ''
+  displayLast.innerHTML = ''
+}
 
 numberButtons.forEach((button) => {
     button.addEventListener("click", () => {
@@ -52,6 +61,10 @@ numberButtons.forEach((button) => {
         else{
             display.innerHTML += button.innerHTML;
         }
+      }
+      else{
+        reset()
+        display.innerHTML = button.innerHTML;
       }
     });
   });
@@ -64,6 +77,10 @@ numberButtons.forEach((button) => {
       else{
         display.innerHTML += comaButton.innerHTML;
       }
+    }
+    else{
+      reset();
+      display.innerHTML += comaButton.innerHTML;
     }
   });
 
@@ -102,32 +119,29 @@ function convertOperand(operand){
     
 }
 
+function calculate(){
+  math ++;
+  console.log('works')
+  convertOperand(operand)
+  secondNumber = Number(display.innerHTML);
+  let result = operate(operation,firstNumber,secondNumber);
+  display.innerHTML = result; 
+  // displayLast.innerHTML += `${secondNumber}=`
+  displayLast.innerHTML = `${firstNumber} ${operand} ${secondNumber} =`
+
+  console.log(result)
+}
+
 operateButton.addEventListener('click', () => {
     if(operand !='' && math === 0){
-        math ++;
-        console.log('works')
-        convertOperand(operand)
-        secondNumber = Number(display.innerHTML);
-
-        let result = operate(operation,firstNumber,secondNumber);
-        display.innerHTML = result; 
-        // displayLast.innerHTML += `${secondNumber}=`
-        displayLast.innerHTML = `${firstNumber} ${operand} ${secondNumber} =`
-
-        console.log(result)
+        calculate();
     }
   });
 
   // clear & delete
 
   clearButton.addEventListener('click', () => {
-    firstNumber = 0;
-    secondNumber = 0;
-    operand ='';
-    operation ='';
-    math = 0 ;
-    display.innerHTML = ''
-    displayLast.innerHTML = ''
+    reset();
   })
 
   deleteButton.addEventListener('click', () => {
@@ -135,3 +149,20 @@ operateButton.addEventListener('click', () => {
       display.innerHTML = display.innerHTML.slice(0, -1)
     }
   })
+
+
+  // fajny trick
+  calculator= document.getElementById("calculator");
+
+  function transform(){  
+    calculator.style.transform = "translate3d(0px, 0px, -250px)";
+    calculator.style.cursor="default";
+}
+
+function transformReverse(){
+  calculator.style.transform = "translate3d(0px, 0px, -250px)";
+
+}
+
+calculator.addEventListener('click', transform)
+
