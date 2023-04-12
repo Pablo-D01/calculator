@@ -28,6 +28,7 @@ const display = document.querySelector('.display');
 const displayLast = document.querySelector('.displayLast');
 const comaButton = document.querySelector('.comaButton');
 const clearButton = document.querySelector('.clearButton');
+const deleteButton = document.querySelector('.deleteButton');
 
 
 let firstNumber = 0;
@@ -35,6 +36,7 @@ let secondNumber = 0;
 let operand ='';
 let operation ='';
 let math = 0 ;
+let result = 0;
 
 function isDivEmpty(element) {
     return element.innerHTML.trim() === '';
@@ -109,7 +111,9 @@ operateButton.addEventListener('click', () => {
 
         let result = operate(operation,firstNumber,secondNumber);
         display.innerHTML = result; 
-        displayLast.innerHTML += `${secondNumber}=`
+        // displayLast.innerHTML += `${secondNumber}=`
+        displayLast.innerHTML = `${firstNumber} ${operand} ${secondNumber} =`
+
         console.log(result)
     }
   });
@@ -124,4 +128,10 @@ operateButton.addEventListener('click', () => {
     math = 0 ;
     display.innerHTML = ''
     displayLast.innerHTML = ''
+  })
+
+  deleteButton.addEventListener('click', () => {
+    if(math === 0){
+      display.innerHTML = display.innerHTML.slice(0, -1)
+    }
   })

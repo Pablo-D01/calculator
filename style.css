@@ -20,31 +20,71 @@ body{
     padding: 20px;
     border: 1px solid black;
     border-radius: 10px;
-    font-size: 30px ;
-
+    box-shadow: rgba(0, 0, 0, 0.4) 0px 2px 4px, rgba(0, 0, 0, 0.3) 0px 7px 13px -3px, rgba(0, 0, 0, 0.2) 0px -3px 0px inset;
 }
 
 .screen{
     height: 100px;
-    background-color: #3B3B3B;
+    background-color: #2B3139;
     border: 0.5px solid black;
     border-radius: 5px;
     margin-bottom: 10px;
+    color: white;
+    box-shadow: inset 2px 3px 5px 0px rgba(0,0,0,0.7);
+
+    
 }
+
+.displayLast{
+    position: relative;
+    height: 40px;
+    left: 10px;
+    top: 10px;
+    font-size: 15px ;
+    color: #5EA07B;
+
+}
+
+.display{
+    position: relative;
+    left: 10px;
+    height: 40px;
+    font-size: 30px ;
+}
+
+
+
 .buttonsScreen{
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-template-rows: repeat(5, 1fr);
-    grid-column-gap: 0px;
-    grid-row-gap: 0px;
+    grid-column-gap: 5px;
+    grid-row-gap: 5px;
 }
 
-.clearButton{
+.buttonsScreen button:hover{
+    cursor: pointer;
+    background-color:#363e48 ;
+}
+
+#clearButton{
     grid-area: 1 / 1 / 2 / 3;
+    background-color: #d93232;
+    color: white;
+}
+#clearButton:hover{
+    background-color: #d94532;
+
 }
 
-.deleteButton{
-    grid-area: 1 / 3 / 2 / 5
+#deleteButton{
+    grid-area: 1 / 3 / 2 / 5;
+    background-color: #FF707E;
+    color: white;
+}
+#deleteButton:hover{
+    background-color: #ff808c;
+
 }
 
 button{
@@ -61,3 +101,4 @@ button{
     font-weight: bold;
 
 }
+
