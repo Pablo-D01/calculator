@@ -1,168 +1,98 @@
-//operacje matematyczne
-
-function add(a,b){
-    return(a + b);
+// Mathematical operations
+function operate(operator, a, b) {
+  switch (operator) {
+    case "+":
+      return a + b;
+    case "-":
+      return a - b;
+    case "*":
+      return a * b;
+    case "÷":
+      return a / b;
+  }
 }
 
-function subtract(a,b){
-    return( a - b);
-}
-
-function multiply(a,b){
-    return( a * b);
-}
-
-function divide(a,b){
-    return( a / b);
-}
-
-function operate(operation,a,b){
-   return operation(a,b)
-
-}
-
-// działanie przycisków
-//liczbowe
+// DOM elements
+const calculator = document.getElementById("calculator");
 const numberButtons = document.querySelectorAll(".numberButton");
-const display = document.querySelector('.display');
-const displayLast = document.querySelector('.displayLast');
-const comaButton = document.querySelector('.comaButton');
-const clearButton = document.querySelector('.clearButton');
-const deleteButton = document.querySelector('.deleteButton');
-
+const mathButtons = document.querySelectorAll(".mathButton");
+const display = document.querySelector(".display");
+const displayLast = document.querySelector(".displayLast");
+const clearButton = document.querySelector(".clearButton");
+const deleteButton = document.querySelector(".deleteButton");
+const operateButton = document.querySelector(".operateButton");
+const comaButton = document.querySelector(".comaButton");
 
 let firstNumber = 0;
 let secondNumber = 0;
-let operand ='';
-let operation ='';
-let math = 0 ;
-let result = 0;
+let currentOperation = "";
+let isNewNumber = true;
 
-function isDivEmpty(element) {
-    return element.innerHTML.trim() === '';
-  }
-
-function reset(){
+// Resets calculator display and state
+function reset() {
   firstNumber = 0;
   secondNumber = 0;
-  operand ='';
-  operation ='';
-  math = 0 ;
-  display.innerHTML = ''
-  displayLast.innerHTML = ''
+  currentOperation = "";
+  display.textContent = "0";
+  displayLast.textContent = "";
+  isNewNumber = true;
 }
 
+// Updates the display when a number or dot is clicked
+function updateDisplay(value) {
+  if (isNewNumber) {
+    display.textContent =
+      value === "." && !display.textContent.includes(".") ? "0." : value;
+    isNewNumber = false;
+  } else {
+    if (!(value === "." && display.textContent.includes("."))) {
+      display.textContent += value;
+    }
+  }
+}
+
+// Set up event listeners for number and dot buttons
 numberButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      if( math === 0 ){
-        if(display.innerHTML === '0'){
-            display.innerHTML = button.innerHTML;
-        }
-        else{
-            display.innerHTML += button.innerHTML;
-        }
-      }
-      else{
-        reset()
-        display.innerHTML = button.innerHTML;
-      }
-    });
-  });
+  button.addEventListener("click", () => updateDisplay(button.textContent));
+});
 
-  comaButton.addEventListener("click", () => {
-    if(math === 0){
-      if(display.textContent.includes('.') ){
-        return
-      }
-      else{
-        display.innerHTML += comaButton.innerHTML;
-      }
-    }
-    else{
-      reset();
-      display.innerHTML += comaButton.innerHTML;
+comaButton.addEventListener("click", () => updateDisplay("."));
+
+// Operation button event
+mathButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (!isNewNumber) {
+      firstNumber = parseFloat(display.textContent);
+      currentOperation = button.textContent;
+      displayLast.textContent = `${display.textContent} ${currentOperation}`;
+      isNewNumber = true;
     }
   });
+});
 
-// matematyczne
-const mathButton = document.querySelectorAll(".mathButton");
-const operateButton = document.querySelector('.operateButton');
+// Calculate the result
+operateButton.addEventListener("click", () => {
+  if (currentOperation && !isNewNumber) {
+    secondNumber = parseFloat(display.textContent);
+    const result = operate(currentOperation, firstNumber, secondNumber);
+    display.textContent = result;
+    displayLast.textContent = `${firstNumber} ${currentOperation} ${secondNumber} = ${result}`;
+    isNewNumber = true;
+  }
+});
 
+// Clear and delete functionalities
+clearButton.addEventListener("click", reset);
 
-mathButton.forEach((button) => {
-    button.addEventListener("click", () => {
+deleteButton.addEventListener("click", () => {
+  if (!isNewNumber) {
+    display.textContent = display.textContent.slice(0, -1) || "0";
+    if (display.textContent === "0") isNewNumber = true;
+  }
+});
 
-        if(isDivEmpty(displayLast)){
-            firstNumber = Number(display.innerHTML);
-            displayLast.innerHTML += display.innerHTML + button.innerHTML;
-            operand = button.innerHTML;
-            display.innerHTML ='0';
-        }
-        else if( math === 0 ){
-            displayLast.innerHTML = displayLast.innerHTML.substring(0, displayLast.innerHTML.length - 1) + button.innerHTML ;
-            operand = button.innerHTML;
-        }
-    });
-  });
-
-  
-function convertOperand(operand){
-    if (operand === '+') {
-        operation = add;
-      } else if (operand === '-') {
-        operation = subtract;
-      } else if (operand === '*') {
-        operation = multiply;
-      } else if (operand === '÷') {
-        operation = divide;
-      }
-    
-}
-
-function calculate(){
-  math ++;
-  console.log('works')
-  convertOperand(operand)
-  secondNumber = Number(display.innerHTML);
-  let result = operate(operation,firstNumber,secondNumber);
-  display.innerHTML = result; 
-  // displayLast.innerHTML += `${secondNumber}=`
-  displayLast.innerHTML = `${firstNumber} ${operand} ${secondNumber} =`
-
-  console.log(result)
-}
-
-operateButton.addEventListener('click', () => {
-    if(operand !='' && math === 0){
-        calculate();
-    }
-  });
-
-  // clear & delete
-
-  clearButton.addEventListener('click', () => {
-    reset();
-  })
-
-  deleteButton.addEventListener('click', () => {
-    if(math === 0){
-      display.innerHTML = display.innerHTML.slice(0, -1)
-    }
-  })
-
-
-  // fajny trick
-  calculator= document.getElementById("calculator");
-
-  function transform(){  
-    calculator.style.transform = "translate3d(0px, 0px, -250px)";
-    calculator.style.cursor="default";
-}
-
-function transformReverse(){
+// Styling transformations
+calculator.addEventListener("click", () => {
   calculator.style.transform = "translate3d(0px, 0px, -250px)";
-
-}
-
-calculator.addEventListener('click', transform)
-
+  calculator.style.cursor = "default";
+});
